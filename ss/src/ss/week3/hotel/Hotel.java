@@ -92,14 +92,19 @@ public class Hotel
 		return hotel_password;
 	}
 	
-	public void getBill(String name, int nights, PrintStream ps) {
+	public Bill getBill(String name, int nights, PrintStream ps) {
 		if (getRoom(name) instanceof PricedRoom){
 			Bill bill = new Bill(ps);
 			if (getRoom(name).getSafe() instanceof PricedSafe) {
 				bill.newItem((PricedSafe) getRoom(name).getSafe());
 			}
-			while(nights-->0){bill.newItem((PricedRoom) getRoom(name));}
+			while(nights-- > 0){
+				bill.newItem((PricedRoom) getRoom(name));
+				}
 			bill.close();
+			return bill;
+		} else {
+			return null;
 		}
 	}
 	
