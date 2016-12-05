@@ -10,18 +10,15 @@ public class Password {
 	public Password(Checker check) {
 		checker = check;
 		factoryPassword = checker.generatePassword();
+		password = BasicChecker.INITPASS;
 	}
 
 	public Password() {
-		this.checker = new Password(new BasicChecker()).checker;
+		this(new BasicChecker());
 	}
 
 	public boolean acceptable(String suggestion) {
-		if (suggestion.length() >= 6 && !suggestion.contains(" ")) {
-			return true;
-		} else {
-			return false;
-		}
+		return checker.acceptable(suggestion);
 	}
 
 	// @pure;
@@ -34,7 +31,7 @@ public class Password {
 	}
 
 	public boolean setWord(String oldpass, String newpass) {
-		if (oldpass == password && acceptable(newpass) == true) {
+		if (testWord(oldpass) && acceptable(newpass)) {
 			password = newpass;
 			return true;
 		} else {

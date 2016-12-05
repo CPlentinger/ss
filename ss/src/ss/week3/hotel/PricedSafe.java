@@ -12,8 +12,7 @@ public class PricedSafe extends Safe implements Bill.Item{
 	}
 
 	public String toString() {
-		String a = String.format("the price of the safe is %f", this.price);
-		return a;
+		return String.format("the price of the safe is %f", this.price);
 	}
 	
 }

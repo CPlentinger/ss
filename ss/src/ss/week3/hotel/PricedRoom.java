@@ -14,7 +14,6 @@ public class PricedRoom extends Room implements Bill.Item {
 	}
 	
 	public String toString() {
-		String a = String.format("the price per night is %f", this.price);
-		return a;
+		return String.format("the price per night is %f", this.price);
 	}
 }

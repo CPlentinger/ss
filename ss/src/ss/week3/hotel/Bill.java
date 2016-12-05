@@ -6,7 +6,7 @@ public class Bill {
 	public PrintStream stream;
 	public double sum;
 	
-	public static interface Item {
+	public interface Item {
 		public double getAmount();
 		public String toString();
 	}

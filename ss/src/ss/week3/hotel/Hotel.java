@@ -95,8 +95,10 @@ public class Hotel
 	public void getBill(String name, int nights, PrintStream ps) {
 		if (getRoom(name) instanceof PricedRoom){
 			Bill bill = new Bill(ps);
-			bill.newItem(getRoom(name).psafe);
-			while(nights-->0){bill.newItem(proom1);}
+			if (getRoom(name).getSafe() instanceof PricedSafe) {
+				bill.newItem((PricedSafe) getRoom(name).getSafe());
+			}
+			while(nights-->0){bill.newItem((PricedRoom) getRoom(name));}
 			bill.close();
 		}
 	}

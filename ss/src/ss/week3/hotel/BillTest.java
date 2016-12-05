@@ -15,6 +15,7 @@ public class BillTest {
 	@Before
 	public void setUp(){
 		bill1 = new Bill(System.out);
+		bill2 = new Bill(null);
 		item1 = new Item("item1", 1);
 		item2 = new Item("item2", 2);
 		
