@@ -1,8 +1,8 @@
 package ss.week3.hotel;
 
 public class Item implements Bill.Item {
-	public static String description;
-	public static double amount;
+	public String description;
+	public double amount;
 	
 	
 	public Item(String thedescription, double theamount) {
