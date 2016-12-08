@@ -1,8 +1,8 @@
 package ss.week2.hotel;
 
 public class Safe {
-		public boolean active = false;
-		public boolean open = false;
+		public boolean active;
+		public boolean open;
 		private Password password;
 		/*
 		 public static void main(String[] args) {
@@ -14,6 +14,8 @@ public class Safe {
 		/** Create's a new Safe */
 		public Safe(){
 			password = new Password();
+			active = false;
+			open = false;
 		}
 		
 		/** Makes the safe active,

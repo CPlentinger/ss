@@ -12,22 +12,14 @@ public class Hotel
 	// Initialize objects
 	public Room room1;
 	public Room room2;
-	public Safe safe1;
-	public Safe safe2;
 	public Password hotel_password;
 	
 	// Constructor for Hotel
 	public Hotel(String name){
 		this.name = name;
 		hotel_password = new Password();
-		
 		room1 = new Room(1);
-		safe1 = new Safe();
-		room1.setSafe(safe1);
-		
 		room2 = new Room(1);
-		safe2 = new Safe();
-		room2.setSafe(safe2);
 	}
 	
 	// Checks in the guest into a free room if the password is correct
