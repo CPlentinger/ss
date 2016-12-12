@@ -1,6 +1,6 @@
 package ss.week4.math;
 
-public class Constant implements Function {
+public class Constant implements Function, Intergrandable {
 	
 	double constant;
 	Function derivative;
@@ -18,8 +18,14 @@ public class Constant implements Function {
 	public Function derivative() {
 		return derivative = new Constant(0);
 	}
+
+	@Override
+	public Function integrand() {
+		return new LinearProduct(new Constant(constant), new Exponent(1));
+	}
 	
+	@Override
 	public String toString(){
-		return "The constant is: f(x)=" + constant;
+		return "(" + constant + ")";
 	}
 }

@@ -16,4 +16,10 @@ public class Sum implements Function{
 	public Function derivative() {
 		return new Sum(f1.derivative(), f2.derivative());
 	}
+	
+	@Override
+	public String toString() {
+		return f1.toString() + " + " + f2.toString();
+	}
+
 }
