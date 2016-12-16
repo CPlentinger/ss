@@ -103,7 +103,7 @@ public class Game {
     }
 
     /**
-     * Resets the game. <br>
+     * Resets the game. <br>this
      * The board is emptied and player[0] becomes the current player.
      */
     private void reset() {
@@ -118,7 +118,17 @@ public class Game {
      * the changed game situation is printed.
      */
     private void play() {
-        // TODO: implement, see P-4.20
+    	update();
+    	while (!board.gameOver()) {
+    	players[current].makeMove(board);
+    	update();
+    	if (current == 0) {
+    		current++;
+    	} else {
+    		current--;
+    	}
+    	}
+    	printResult();
     }
 
     /**

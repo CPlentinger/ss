@@ -26,7 +26,14 @@ public class LinkedList<Element> {
 
     //@ ensures this.size == \old(size) - 1;
     public void remove(Element element) {
-    	findBefore(element).next = findBefore(element).next.next;
+    	if (findBefore(element) != null) {
+    		findBefore(element).next = findBefore(element).next.next;
+    		size -= 1;
+    	} else {
+    		first = getNode(1);
+    		size -= 1;
+    	}
+    	
     }
 
     public Node findBefore(Element element) {

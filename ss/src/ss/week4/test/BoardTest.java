@@ -75,9 +75,9 @@ public class BoardTest {
     @Test
     public void testDeepCopy() {
         board.setField(0, Mark.XX);
+        System.out.println(board.getField(0));
         Board deepCopyBoard = board.deepCopy();
         deepCopyBoard.setField(0, Mark.OO);
-
         assertEquals(Mark.XX, board.getField(0));
         assertEquals(Mark.OO, deepCopyBoard.getField(0));
     }
