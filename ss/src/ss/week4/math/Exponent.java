@@ -2,9 +2,9 @@ package ss.week4.math;
 
 public class Exponent implements Function, Intergrandable {
 
-	public double exponent;
+	public int exponent;
 
-	public Exponent(double val) {
+	public Exponent(int val) {
 		exponent = val;
 	}
 

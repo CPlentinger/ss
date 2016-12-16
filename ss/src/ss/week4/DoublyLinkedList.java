@@ -18,14 +18,24 @@ public class DoublyLinkedList<Element> {
     //@ ensures this.size == \old(size) + 1;
     //@ ensures this.getNode(index).equals(element);
     public void add(int index, Element element) {
-        // TODO: implement, see exercise P-4.17
+		Node newNode = new Node(element);
+		Node last = getNode(index).previous;
+		newNode.previous = last;
+		newNode.next = getNode(index);
+		head.previous = newNode;
+		last.next = newNode;
+		size += 1;
     }
 
     //@ requires 0 <= index && index < this.size;
     //@ ensures this.size == \old(size) - 1;
     public void remove(int index) {
-        // TODO: implement, see exercise P-4.17
-    }
+    	Node prev = getNode(index).previous;
+    	Node next = getNode(index).next;
+    	prev.next = next;
+    	next.previous = prev;
+		size -= 1;
+       }
 
     //@ requires 0 <= index && index < this.size;
     /*@ pure */ public Element get(int index) {

@@ -26,7 +26,6 @@ public class BillTest {
 		bill1.newItem(item1);
 		assertTrue(item1.getAmount() == 1);
 		assertTrue(bill1.getSum() == 1);
-		bill1.sum = 0;
 	}
 	
 	@Test
