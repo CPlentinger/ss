@@ -55,24 +55,24 @@ public class MapUtil {
     	
 	}
 	public static <K, V> Map<V, K> inverseBijection(Map<K, V> map) {
-		ArrayList<V> values = new ArrayList<V>(inverse(map).keySet());
-		ArrayList<Set<K>> keyset = new ArrayList<Set<K>>(inverse(map).values());
+		ArrayList<V> keyset = new ArrayList<V>(inverse(map).keySet());
+		ArrayList<Set<K>> values = new ArrayList<Set<K>>(inverse(map).values());
 		HashMap<V, K> test = new HashMap<V,K>();
 		if (isOneOnOne(map) && isSurjectiveOnRange(map, new HashSet<V>(map.values()))) {
-			for (int i=0; i<values.size(); i++) {
-				ArrayList<K> keys = new ArrayList<K>(keyset.get(i));
-				test.put(values.get(i), keys.get(i));
+			for (int i=0; i<keyset.size(); i++) {
+				ArrayList<K> keys = new ArrayList<K>(values.get(i));
+				test.put(keyset.get(i), keys.get(i));
 			}			
 			return test;
 		}
 		return null;
 	}
 	public static <K, V, W> boolean compatible(Map<K, V> f, Map<V, W> g) {
-        // TODO: implement, see exercise P-5.4
-        return false;
+		ArrayList<V> valuesf = new ArrayList<V>(f.values());
+		ArrayList<W> valuesg = new ArrayList<W>(g.values());
+		return valuesf.containsAll(valuesg);
 	}
 	public static <K, V, W> Map<K, W> compose(Map<K, V> f, Map<V, W> g) {
-        // TODO: implement, see exercise P-5.5
-        return null;
+		return null;
 	}
 }
