@@ -10,8 +10,8 @@ public class Util {
    * @param l2 second list of elements.
    * @return result, l1 and l2 zipped together.
    */
-  public static <ELEMENT> List<ELEMENT> zip(List<ELEMENT> l1, List<ELEMENT> l2) {
-    ArrayList<ELEMENT> result = new ArrayList<ELEMENT>();
+  public static <E> List<E> zip(List<E> l1, List<E> l2) {
+    ArrayList<E> result = new ArrayList<E>();
     for (int i = 0; i < l1.size(); i++) {
       result.add(l1.get(i));
       result.add(l2.get(i));

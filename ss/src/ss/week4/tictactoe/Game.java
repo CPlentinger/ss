@@ -120,13 +120,13 @@ public class Game {
     private void play() {
     	update();
     	while (!board.gameOver()) {
-    	players[current].makeMove(board);
-    	update();
-    	if (current == 0) {
-    		current++;
-    	} else {
-    		current--;
-    	}
+	    	players[current].makeMove(board);
+	    	update();
+	    	if (current == 0) {
+	    		current++;
+	    	} else {
+	    		current--;
+	    	}
     	}
     	printResult();
     }

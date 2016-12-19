@@ -1,6 +1,6 @@
 package ss.week4.math;
 
-public class Product implements Function, Intergrandable {
+public class Product implements Function {
 	
 	public Function f1;
 	public Function f2;
@@ -18,11 +18,6 @@ public class Product implements Function, Intergrandable {
 	@Override
 	public Function derivative() {
 		return new Sum(new Product(f1.derivative(),f2), new Product(f1,f2.derivative()));
-	}
-
-	@Override
-	public Function integrand() {
-		return null;
 	}
 
 	@Override

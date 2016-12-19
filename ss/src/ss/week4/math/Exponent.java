@@ -20,7 +20,7 @@ public class Exponent implements Function, Intergrandable {
 
 	@Override
 	public Function integrand() {
-		return new LinearProduct(new Constant(1/(this.exponent+1)), new Exponent(this.exponent+1));
+		return new LinearProduct(new Constant(1.0/(this.exponent+1)), new Exponent(this.exponent+1));
 	}
 	
 	@Override

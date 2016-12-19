@@ -10,67 +10,63 @@ import java.util.Map;
 import java.util.Set;
 
 public class MapUtil {
+	
+	//@ ensures \result == \forall int i; i >= 0 & i < map.keyset().size(); \exists ! map.get(i);
+	/*@pure*/
     public static <K, V> boolean isOneOnOne(Map<K, V> map) {
-    	ArrayList<Object> keys = new ArrayList<Object>(map.keySet());
     	ArrayList<Object> temp = new ArrayList<Object>();
-    	for (int i=0; i < keys.size(); i++) {
-    		if (temp.contains((map.get(keys.get(i))))) {
+    	for (K key : map.keySet()) {
+    		if (temp.contains((map.get(key)))) {
     			return false;
     		}
-    		temp.add(map.get(keys.get(i)));
+    		temp.add(map.get(key));
     	}
         return true;
     }
+    
+    /*@pure*/
     public static <K, V> boolean isSurjectiveOnRange(Map<K, V> map, Set<V> range) {
-    	ArrayList<Object> keys = new ArrayList<Object>(map.keySet());
-    	for (int i=0; i < keys.size(); i++) {
-    		range.remove(map.get(keys.get(i)));
+    	for (K key : map.keySet()) {
+    		range.remove(map.get(key));
     	}
         return range.isEmpty();
     }
-    public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {
-    	ArrayList<K> k = new ArrayList<K>(map.keySet());
-    	ArrayList<V> v = new ArrayList<V>();
-    	HashMap<V, Set<K>> result = new HashMap<V, Set<K>>();
-    	for (int i=0; i < k.size(); i++) {
-    		v.add(map.get(k.get(i)));
-    	}
-    	for (int i=0; i<k.size(); i++) {
-    		for (int j=0; j<k.size(); j++) {
-    			if (map.get(k.get(i)) == map.get(k.get(j)) && i!=j && !result.containsKey(map.get(k.get(i)))) {
-    				result.put(v.get(i), new HashSet<K>(Arrays.asList(k.get(i), k.get(j))));
-    				System.out.println(result.toString());
-    				break;
-    			}
-    		}
-    		if (!result.containsKey(v.get(i))) {
-    			result.put(v.get(i), new HashSet<K>(Arrays.asList(k.get(i))));
-    			System.out.println(result.toString());
-    		}
-    	}
-    	return result;
-    	
     
+    public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {
+    	HashMap<V, Set<K>> result = new HashMap<V, Set<K>>();
+    	for (K key : map.keySet()) {
+    		HashSet<K> keys = new HashSet<K>();
+    		for (Map.Entry<K,V> entry : map.entrySet()) {
+    			if (entry.getValue().equals(map.get(key))) {
+    				keys.add(entry.getKey());
+    				}
+    			}
+    		result.put(map.get(key), keys);
+    		}
+    	return result;
+    	}
     	
-    	
-	}
 	public static <K, V> Map<V, K> inverseBijection(Map<K, V> map) {
-		ArrayList<V> keyset = new ArrayList<V>(inverse(map).keySet());
-		ArrayList<Set<K>> values = new ArrayList<Set<K>>(inverse(map).values());
-		HashMap<V, K> test = new HashMap<V,K>();
+		HashMap<V, K> result = new HashMap<V,K>();
 		if (isOneOnOne(map) && isSurjectiveOnRange(map, new HashSet<V>(map.values()))) {
-			for (int i=0; i<keyset.size(); i++) {
-				ArrayList<K> keys = new ArrayList<K>(values.get(i));
-				test.put(keyset.get(i), keys.get(i));
+			for (K key : map.keySet()) {
+				result.put(map.get(key), key);
 			}			
-			return test;
+			return result;
 		}
 		return null;
 	}
 	public static <K, V, W> boolean compatible(Map<K, V> f, Map<V, W> g) {
-		ArrayList<V> valuesf = new ArrayList<V>(f.values());
-		ArrayList<W> valuesg = new ArrayList<W>(g.values());
-		return valuesf.containsAll(valuesg);
+		for (W w : g.values()) {
+			if (!f.containsKey(w)) {
+				return false;
+			}
+			HashMap<W, V> v = new ArrayList<V>(g.keySet());
+			if (f.get(w) != v.get()) {
+				
+			}
+		}
+		return true;
 	}
 	public static <K, V, W> Map<K, W> compose(Map<K, V> f, Map<V, W> g) {
 		return null;

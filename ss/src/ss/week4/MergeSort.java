@@ -26,11 +26,11 @@ public class MergeSort {
             list.clear();
             while(!left.isEmpty() && !right.isEmpty())
             {
-              if((left.get(0)).compareTo(right.get(0)) <= 0)
+              if((left.get(0)).compareTo(right.get(0)) <= 0) {
                 list.add(left.remove(0));
-
-              else
+              } else {
                 list.add(right.remove(0));
+              }
             }
 
             while(!left.isEmpty())

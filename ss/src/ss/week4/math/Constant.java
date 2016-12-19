@@ -3,7 +3,6 @@ package ss.week4.math;
 public class Constant implements Function, Intergrandable {
 	
 	double constant;
-	Function derivative;
 	
 	public Constant(double val){
 		constant = val;
@@ -16,7 +15,7 @@ public class Constant implements Function, Intergrandable {
 
 	@Override
 	public Function derivative() {
-		return derivative = new Constant(0);
+		return new Constant(0);
 	}
 
 	@Override

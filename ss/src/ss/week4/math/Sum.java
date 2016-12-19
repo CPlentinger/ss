@@ -1,6 +1,6 @@
 package ss.week4.math;
 
-public class Sum implements Function{
+public class Sum implements Function, Intergrandable{
 	public Function f1;
 	public Function f2;
 	public Sum(Function x, Function y){		
@@ -15,6 +15,14 @@ public class Sum implements Function{
 	@Override
 	public Function derivative() {
 		return new Sum(f1.derivative(), f2.derivative());
+	}
+	@Override
+	public Function integrand() {
+		if (f1 instanceof Intergrandable && f2 instanceof Intergrandable) {
+			return new Sum(((Intergrandable) f1).integrand(), ((Intergrandable) f2).integrand());
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
