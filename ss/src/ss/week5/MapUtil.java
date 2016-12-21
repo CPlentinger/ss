@@ -7,11 +7,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class MapUtil {
 	
-	//@ ensures \result == \forall int i; i >= 0 & i < map.keyset().size(); \exists ! map.get(i);
+	//@ ensures \result == (\forAll K x,y; map.containsKey(x) && map.containsKey(y) && x != y; map.get(x) != map.get(y));
 	/*@pure*/
     public static <K, V> boolean isOneOnOne(Map<K, V> map) {
     	ArrayList<Object> temp = new ArrayList<Object>();
@@ -24,7 +25,8 @@ public class MapUtil {
         return true;
     }
     
-    /*@pure*/
+	//@ ensures \result == (\forAll V y; map.containsValue(y); range.containsValue(y); (\exists K x; map.containsKey(x); map.get(x) == y));
+	/*@pure*/
     public static <K, V> boolean isSurjectiveOnRange(Map<K, V> map, Set<V> range) {
     	for (K key : map.keySet()) {
     		range.remove(map.get(key));
@@ -32,9 +34,10 @@ public class MapUtil {
         return range.isEmpty();
     }
     
+    //@ ensures \result == (\forAll K x; map.inverse(map) == x);
     public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {
     	HashMap<V, Set<K>> result = new HashMap<V, Set<K>>();
-    	for (K key : map.keySet()) {
+    	for (K key : map.keySet()) {	
     		HashSet<K> keys = new HashSet<K>();
     		for (Map.Entry<K,V> entry : map.entrySet()) {
     			if (entry.getValue().equals(map.get(key))) {
@@ -45,7 +48,8 @@ public class MapUtil {
     		}
     	return result;
     	}
-    	
+    
+    //@ ensures \result == (\forAll K x; map.inverseBijection(map) == x);
 	public static <K, V> Map<V, K> inverseBijection(Map<K, V> map) {
 		HashMap<V, K> result = new HashMap<V,K>();
 		if (isOneOnOne(map) && isSurjectiveOnRange(map, new HashSet<V>(map.values()))) {
@@ -56,19 +60,24 @@ public class MapUtil {
 		}
 		return null;
 	}
+	
+	//@ ensures (\forAll K x; (\exists V y; f.get(x) == y && g.values().contains(y))) ==> \result == true;
+	/*@pure*/
 	public static <K, V, W> boolean compatible(Map<K, V> f, Map<V, W> g) {
-		for (W w : g.values()) {
-			if (!f.containsKey(w)) {
-				return false;
-			}
-			HashMap<W, V> v = new ArrayList<V>(g.keySet());
-			if (f.get(w) != v.get()) {
-				
+			return g.keySet().containsAll(f.values());
+	}
+	
+	//@ ensures \result == (\forAll K x; (\forAll V y; f.get(x) == y; g.values().contains(y)));
+	public static <K, V, W> Map<K, W> compose(Map<K, V> f, Map<V, W> g) {
+		HashMap<K, W> result = new HashMap<K, W>();
+		for (K key : f.keySet()) {
+			V val = f.get(key);
+			for (Map.Entry<V, W> entry : g.entrySet()){
+				if (entry.getKey().equals(val)) {
+					result.put(key, entry.getValue());
+				}
 			}
 		}
-		return true;
-	}
-	public static <K, V, W> Map<K, W> compose(Map<K, V> f, Map<V, W> g) {
-		return null;
+		return result;
 	}
 }

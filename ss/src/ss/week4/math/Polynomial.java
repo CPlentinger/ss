@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Polynomial implements Function, Intergrandable {
-
 	public List<LinearProduct> l1 = new ArrayList<LinearProduct>();
 	
 	
