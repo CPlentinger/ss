@@ -2,8 +2,6 @@ package ss.week5;
 
 import java.util.HashSet;
 import java.util.ArrayList;
-import ss.week4.tictactoe.Board;
-import ss.week4.tictactoe.Mark;
 
 public class NaiveStrategy implements Strategy {
 
@@ -22,7 +20,7 @@ public class NaiveStrategy implements Strategy {
 		}
 		ArrayList<Integer> results = new ArrayList<Integer>();
 		results.addAll(empty);
-		return results.get((int) Math.random()*(results.size()-1));
+		return results.get((int)(Math.random()*results.size()-1));
 	}
 
 }
