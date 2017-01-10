@@ -13,12 +13,17 @@ public class SmartStrategy implements Strategy {
 		for (int i = 0; i < Board.DIM*Board.DIM-1; i++) {
 			if (b.isEmptyField(i)) {
 				Board copy = b.deepCopy();
-				copy.setField(i, Mark.XX);
-				if (copy.isWinner(Mark.XX)) {
+				copy.setField(i, m);
+				if (copy.isWinner(m)) {
 					return i;
 				}
-				copy.setField(i, Mark.OO);
-				if (copy.isWinner(Mark.OO)) {
+			}		
+		}
+		for (int i = 0; i < Board.DIM*Board.DIM-1; i++) {
+			if (b.isEmptyField(i)) {
+				Board copy = b.deepCopy();
+				copy.setField(i, m.other());
+				if (copy.isWinner(m.other())) {
 					return i;
 				}
 			}		

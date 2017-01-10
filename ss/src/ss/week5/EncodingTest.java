@@ -1,10 +1,7 @@
 package ss.week5;
 
-import java.nio.charset.Charset;
-
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
-
 import com.sun.xml.internal.messaging.saaj.util.Base64;
 
 /**

@@ -61,7 +61,7 @@ public class MapUtil {
 		return null;
 	}
 	
-	//@ ensures (\forAll K x; (\exists V y; f.get(x) == y && g.values().contains(y))) ==> \result == true;
+	//@ ensures \result == (\forAll K x; (\exists V y; f.get(x) == y && g.values().contains(y)));
 	/*@pure*/
 	public static <K, V, W> boolean compatible(Map<K, V> f, Map<V, W> g) {
 			return g.keySet().containsAll(f.values());

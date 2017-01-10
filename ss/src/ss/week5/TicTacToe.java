@@ -32,4 +32,11 @@ public class TicTacToe {
     	game1 = new Game(players[0], players[1]);
     	game1.start();
     }
+    public Player createPlayer(String strategy, Mark m) {
+    	if (strategy.equals("-S")) {
+    		return new ComputerPlayer(new SmartStrategy(), m);
+    	} else {
+    		return new ComputerPlayer(new NaiveStrategy(), m);
+    	}
+    }
 }
