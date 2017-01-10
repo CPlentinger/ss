@@ -1,5 +1,7 @@
 package ss.week6.cards;
 
+import java.io.PrintWriter;
+
 public class Card
 {
 
@@ -27,7 +29,9 @@ public class Card
 	    "Hearts", "Spades"};
 
 	// ---- class methods -------------------------------------
-
+	public static void main(String[] args) {
+		PrintWriter name = new PrintWriter(System.out);
+	}
 	/**
 	 * Translates a char encoding of rank into it's String representation.
 	 * @return the String representation of rank
@@ -319,5 +323,9 @@ public class Card
 	 */
 	public boolean isInRankBefore(Card card) {
 		return isRankFollowing(this.getRank(), card.getRank());
+	}
+	
+	public void write(PrintWriter print) {
+		print.print(this.toString());
 	}
 }

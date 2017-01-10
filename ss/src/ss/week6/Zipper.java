@@ -14,17 +14,20 @@ public class Zipper {
         return result;
     }
     
+    public static String zip2(String s1, String s2) throws Exception {
+    		try {
+    			return zip(s1, s2);
+    		} catch (NullPointerException e) {
+    			throw new TooFewArgumentsException(e);
+    		} catch (StringIndexOutOfBoundsException e) {
+    			throw new ArgumentLengthsDifferException(s1.length(), s2.length(), e);
+    		}
+    }
+    
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String s1 = args.length >= 1 ? args[0] : null;
         String s2 = args.length >= 2 ? args[1] : null;
-        if (s1 == null || s2 == null) {
-            System.out.println("error: must pass two command line arguments");
-        } else if (s1.length() != s2.length()) {
-            System.out.println("error: length of command line arguments "
-                    + "differs (" + s1.length() + ", " + s2.length() + ")");
-        } else {
-            System.out.println(zip(s1, s2));
-        }
+        System.out.println(zip2(s1, s2));
     }
 }

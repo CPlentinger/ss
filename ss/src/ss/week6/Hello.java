@@ -4,16 +4,16 @@ public class Hello {
 	public static void main(String[] args) {
 		System.out.println("Enter your name: ");
 		Scanner in = new Scanner(System.in);
-		while (in.hasNext()) {
-			String next = in.next();
-			System.out.println(next);
-			if (next.length() < 1) {
-				System.out.println("break");
+		while (in.hasNextLine()) {
+			String nextl = in.nextLine();
+			if (!nextl.isEmpty()) {
+				System.out.println(nextl);
+				System.out.println("Enter your name: ");
+			} else {
+				in.close();
 				break;
 			}
-			
 		}
-		
-		}
+	}
 	
 }
