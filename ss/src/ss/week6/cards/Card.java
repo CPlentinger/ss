@@ -1,6 +1,13 @@
 package ss.week6.cards;
 
+import java.io.BufferedReader;
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.EOFException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class Card
 {
@@ -29,8 +36,24 @@ public class Card
 	    "Hearts", "Spades"};
 
 	// ---- class methods -------------------------------------
-	public static void main(String[] args) {
-		PrintWriter name = new PrintWriter(System.out);
+	public static void main(String[] args) throws FileNotFoundException {
+		PrintWriter printer;
+		Card CJack = new Card(CLUBS, JACK);
+		Card DKing = new Card(DIAMONDS, KING);
+		Card STen = new Card(SPADES, TEN);
+		System.out.println("1");
+		try {
+			System.out.println("2");
+			printer = new PrintWriter(args[0]);
+		} catch (FileNotFoundException e) {
+			System.out.println("3");
+			throw new FileNotFoundException("The file doesn't exist.");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			printer = new PrintWriter(System.out);
+		}
+		CJack.write(printer);
+		DKing.write(printer);
+		STen.write(printer);
 	}
 	/**
 	 * Translates a char encoding of rank into it's String representation.
@@ -43,6 +66,46 @@ public class Card
 		for (i = 0; i < 13 && RANK_CHARACTERS[i] != rank; i++)
 			;
 		return (i == 13) ? null : RANK_STRINGS[i];
+	}
+	
+	public static Card read(BufferedReader in) throws EOFException {
+			String Line;
+			try {
+				Line = in.readLine();
+			} catch (IOException e) {
+				return null;
+			}
+			if (Line == null) {
+				throw new EOFException();
+			}
+			Scanner scan = new Scanner(Line);
+			String Suit = scan.next();
+			String Rank = scan.next();
+			scan.close();
+			if (isValidRank(rankString2Char(Rank)) && isValidSuit(suitString2Char(Suit))) {
+				return new Card(suitString2Char(Suit), rankString2Char(Rank));
+			} else {
+				return null;
+			}
+	}
+	
+	public static Card read(DataInput in) {
+		char Suit;
+		char Rank;
+		try {
+			Suit = in.readChar();
+			Rank = in.readChar();
+		} catch (IOException e) {
+			System.out.println(2);
+			return null;
+		}
+		if (isValidRank(Rank) && isValidSuit(Suit)) {
+			System.out.println(new Card(Suit, Rank));
+			return new Card(Suit, Rank);
+		} else {
+			System.out.println(1);
+			return null;
+		}
 	}
 
 	/**
@@ -112,7 +175,7 @@ public class Card
 	/**
 	 * Tests if a suit is value of a suit is less than the value of
 	 * another suit following the order
-	 * CLUBS < DIAMONDS < HEARTS < SPADES.
+	 * CLUBS < DIAMOtoStringNDS < HEARTS < SPADES.
 	 */
 	public static boolean suitLessThan(char s1, char s2) {
 		boolean result = false;
@@ -326,6 +389,11 @@ public class Card
 	}
 	
 	public void write(PrintWriter print) {
-		print.print(this.toString());
+		print.println(this.toString());
+		print.flush();
+	}
+	
+	public void write(DataOutput out) throws IOException {
+		out.writeChars("" + this.getSuit() + this.getRank());
 	}
 }
