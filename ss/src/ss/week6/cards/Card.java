@@ -6,10 +6,13 @@ import java.io.DataOutput;
 import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Card
+public class Card implements Serializable
 {
 
 	// ---- constants -----------------------------------
@@ -89,16 +92,19 @@ public class Card
 			}
 	}
 	
-	public static Card read(DataInput in) {
+	public static Card read(DataInput in) throws EOFException {
 		char Suit;
 		char Rank;
 		try {
 			Suit = in.readChar();
 			Rank = in.readChar();
-		} catch (IOException e) {
-			System.out.println(2);
+		} catch (EOFException e) {
+			throw e;
+		}
+		 catch (IOException e) {
 			return null;
 		}
+		
 		if (isValidRank(Rank) && isValidSuit(Suit)) {
 			System.out.println(new Card(Suit, Rank));
 			return new Card(Suit, Rank);
@@ -107,6 +113,17 @@ public class Card
 			return null;
 		}
 	}
+	
+	public static Card read(ObjectInput in) throws EOFException {
+		try {
+			return (Card) in.readObject();
+		} catch (EOFException e) {
+			throw e;
+		} catch (ClassNotFoundException | IOException e) {
+			return null;
+		}
+	}
+	
 
 	/**
 	 * Translates a suit encoding of rank into its String representation.
@@ -394,6 +411,11 @@ public class Card
 	}
 	
 	public void write(DataOutput out) throws IOException {
-		out.writeChars("" + this.getSuit() + this.getRank());
+		out.writeChar(this.getSuit());
+		out.writeChar(this.getRank());
+	}
+	
+	public void write(ObjectOutput out) throws IOException {
+		out.writeObject(this);
 	}
 }
