@@ -1,6 +1,10 @@
 package ss.week7.threads;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class TestSyncConsole extends Thread {
+	public static Lock ReL = new ReentrantLock();
 	public static void main(String[] args) {
 		TestSyncConsole one = new TestSyncConsole();
 		TestSyncConsole two = new TestSyncConsole();
@@ -12,15 +16,19 @@ public class TestSyncConsole extends Thread {
 			try {
 				sum();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}
 	
-	private synchronized void sum() throws InterruptedException {
-		int first = SyncConsole.readInt("8");
-		int second = SyncConsole.readInt("5");
-		SyncConsole.println(Integer.toString(first+second));
-		System.out.println(1);
+	private void sum() throws InterruptedException {
+		ReL.lock();
+		int first = SyncConsole.readInt("Input first number:");
+//		ReL.unlock();
+//		ReL.lock();
+		int second = SyncConsole.readInt("Input second number:");
+//		ReL.unlock();
+//		ReL.lock();
+		SyncConsole.println(Integer.toString(first + second));
+		ReL.unlock();
 	}
 }
