@@ -1,7 +1,8 @@
 package ss.week6.voteMachine;
 import java.util.HashMap;
 import java.util.Map;
-public class VoteList {
+import java.util.Observable;
+public class VoteList extends Observable {
 	public HashMap<String,Integer> VoteList;
 	
 	public VoteList() {
@@ -14,6 +15,8 @@ public class VoteList {
 		} else {
 			VoteList.put(party, 1);
 		}
+		setChanged();
+		notifyObservers("vote");
 	}
 	
 	public Map<String,Integer> getVotes() {

@@ -14,13 +14,13 @@ public class Zipper {
         return result;
     }
     
-    public static String zip2(String s1, String s2) throws Exception {
+    public static String zip2(String s1, String s2) throws TooFewArgumentsException, ArgumentLengthsDifferException {
     		try {
     			return zip(s1, s2);
     		} catch (NullPointerException e) {
-    			throw new TooFewArgumentsException(e);
+    			throw new TooFewArgumentsException();
     		} catch (StringIndexOutOfBoundsException e) {
-    			throw new ArgumentLengthsDifferException(s1.length(), s2.length(), e);
+    			throw new ArgumentLengthsDifferException(s1.length(), s2.length());
     		}
     }
     

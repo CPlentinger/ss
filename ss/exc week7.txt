@@ -1,0 +1,9 @@
+7.14
+It can be locked multiple times and ownership can be passed to the next thread.
+Yes, but the lock has extended capabilities.
+The lock has a fairness parameter that grants access to the longest-waiting thread.
+It's a bit slower than the synchronized blocks.
+
+7.16
+Consumers resond multiple times and skip some input.
+Restrict the order of methods.

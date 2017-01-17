@@ -1,8 +1,11 @@
 package ss.week6;
 
 public class TooFewArgumentsException extends WrongArgumentException {
-	public TooFewArgumentsException(Throwable cause){
-		super("error: must pass two command line arguments", cause);
+	public TooFewArgumentsException(){
+		super();
 	}
-
+	
+	public String getMessage(){
+		return "Please use to strings of equal length.";
+	}
 }

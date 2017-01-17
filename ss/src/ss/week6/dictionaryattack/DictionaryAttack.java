@@ -1,7 +1,13 @@
 package ss.week6.dictionaryattack;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import org.apache.commons.codec.binary.Hex;
 
 public class DictionaryAttack {
 	private Map<String, String> passwordMap;
@@ -15,9 +21,16 @@ public class DictionaryAttack {
 	 * filled withthe content of the file. The key for the map should be
 	 * the username, and the password hash should be the content.
 	 * @param filename
+	 * @throws IOException 
 	 */
-	public void readPasswords(String filename) {
-		// To implement        
+	public void readPasswords(String filename) throws IOException {
+		passwordMap = new HashMap<String, String>();
+		BufferedReader in = new BufferedReader(new FileReader(filename));
+		for (String line = in.readLine(); line != null; line = in.readLine()) {
+			String[] fline = line.split(": ");
+			passwordMap.put(fline[0], fline[1]);
+		}
+		in.close();
 	}
 
 	/**
@@ -27,8 +40,12 @@ public class DictionaryAttack {
 	 * @return
 	 */
 	public String getPasswordHash(String password) {
-    		// To implement
-    		return null;
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			return Hex.encodeHexString(md.digest(password.getBytes()));
+		} catch (NoSuchAlgorithmException e) {
+			return null;
+		}
 	}
 	/**
 	 * Checks the password for the user the password list. If the user
@@ -38,8 +55,12 @@ public class DictionaryAttack {
 	 * @return whether the password for that user was correct.
 	 */
 	public boolean checkPassword(String user, String password) {
-        // To implement
-		return false;
+		if (passwordMap.containsKey(user)) {
+			return passwordMap.get(user).equals(getPasswordHash(password));
+		}else {
+			return false;
+		}
+		
 	}
 
 	/**
@@ -47,20 +68,36 @@ public class DictionaryAttack {
 	 * entries to a dictionary that maps password hashes (hex-encoded) to
      * the original password.
 	 * @param filename filename of the dictionary.
+	 * @throws IOException 
 	 */
-    	public void addToHashDictionary(String filename) {
-        // To implement        
+    	public void addToHashDictionary(String filename) throws IOException {        
+    		hashDictionary = new HashMap<String, String>();
+    		BufferedReader in = new BufferedReader(new FileReader(filename));
+    		for (String line = in.readLine(); line != null; line = in.readLine()) {
+    			hashDictionary.put(line, getPasswordHash(line));
+    		}
+    		in.close();
     }
 	/**
 	 * Do the dictionary attack.
 	 */
 	public void doDictionaryAttack() {
-		// To implement
+		for (String user : passwordMap.keySet()) {
+			for (String pass : hashDictionary.keySet()) {
+				if (checkPassword(user, pass)) {
+					System.out.printf("%-10s %s %n", user, pass);
+				}
+			}
+		}
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		DictionaryAttack da = new DictionaryAttack();
-		// To implement
+		da.readPasswords("LeakedPasswords.txt");
+		da.addToHashDictionary("pass.txt");
 		da.doDictionaryAttack();
 	}
 
+/*	6.23
+ * 	26^4 = 456,976
+ */
 }

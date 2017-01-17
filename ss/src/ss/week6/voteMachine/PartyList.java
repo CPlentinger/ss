@@ -1,8 +1,9 @@
 package ss.week6.voteMachine;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class PartyList {
+public class PartyList extends Observable {
 	
 	ArrayList<String> PartyList;
 	public PartyList() {
@@ -10,6 +11,8 @@ public class PartyList {
 	}
 	public void addParty(String party) {
 		PartyList.add(party);
+		setChanged();
+		notifyObservers("party");
 	}
 	
 	public ArrayList<String> getParties() {
