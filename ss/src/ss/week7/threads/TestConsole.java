@@ -13,7 +13,7 @@ public class TestConsole extends Thread {
 	}
 	
 	private static void sum() {
-		String result = Integer.toString(Console.readInt("6") + Console.readInt("3"));
+		String result = String.valueOf(Console.readInt("Input first number:") + Console.readInt("Input second number:"));
 		Console.println(result);
 	}
 }

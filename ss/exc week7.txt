@@ -5,5 +5,5 @@ The lock has a fairness parameter that grants access to the longest-waiting thre
 It's a bit slower than the synchronized blocks.
 
 7.16
-Consumers resond multiple times and skip some input.
+Consumers respond multiple times and skip some input.
 Restrict the order of methods.

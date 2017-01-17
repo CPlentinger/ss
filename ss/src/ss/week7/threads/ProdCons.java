@@ -1,5 +1,8 @@
 package ss.week7.threads;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Main class for Producer/Consumer program illustrating
  * multiple threads modifying a shared object. 
@@ -12,6 +15,7 @@ package ss.week7.threads;
 public class ProdCons implements IntCell {
 	public int value;
 	public boolean changed;
+	public Lock l1 = new ReentrantLock();
 	public static void main(String[] args) {
 		ProdCons cell = new ProdCons();
 		Thread prod1 = new IntProducer(1, cell);
@@ -27,27 +31,31 @@ public class ProdCons implements IntCell {
 
 	@Override
 	public synchronized void setValue(int val) {
-		if (true)
+		while (changed) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		value = val;
+		}
 		changed = true;
 		notify();
+		value = val;
 	}
 
 	@Override
 	public synchronized int getValue() {
-		try {
-			wait();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while (!changed) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		changed = false;
+		notify();
 		return value;
 	}
 }
