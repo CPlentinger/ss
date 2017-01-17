@@ -23,11 +23,7 @@ public class TestSyncConsole extends Thread {
 	private void sum() throws InterruptedException {
 		ReL.lock();
 		int first = SyncConsole.readInt("Input first number:");
-//		ReL.unlock();
-//		ReL.lock();
 		int second = SyncConsole.readInt("Input second number:");
-//		ReL.unlock();
-//		ReL.lock();
 		SyncConsole.println(Integer.toString(first + second));
 		ReL.unlock();
 	}
