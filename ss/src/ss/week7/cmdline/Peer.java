@@ -31,6 +31,10 @@ public class Peer implements Runnable {
      */
     public Peer(String nameArg, Socket sockArg) throws IOException
     {
+    	name = nameArg;
+    	sock = sockArg;
+    	in = new BufferedReader(new InputStreamReader(sockArg.getInputStream()));
+    	out = new BufferedWriter(new OutputStreamWriter(sockArg.getOutputStream()));
     }
 
     /**
@@ -38,6 +42,12 @@ public class Peer implements Runnable {
      * writes the characters to the default output.
      */
     public void run() {
+    	try {
+			out.write(in.readLine());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 
@@ -47,12 +57,41 @@ public class Peer implements Runnable {
      * On Peer.EXIT the method ends
      */
     public void handleTerminalInput() {
+    	BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
+    	String next = "";
+		try {
+			next = br1.readLine();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	if (next.equals("exit")) {
+    		return;
+    	} else {
+	    	try {
+				out.write(next);
+				out.flush();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	
     }
 
     /**
      * Closes the connection, the sockets will be terminated
      */
     public void shutDown() {
+    	try {
+			sock.close();
+			in.close();
+	    	out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 
     /**  returns name of the peer object*/
