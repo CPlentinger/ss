@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * Peer for a simple client-server application
@@ -55,28 +56,18 @@ public class Peer implements Runnable {
      * Reads a string from the console and sends this string over
      * the socket-connection to the Peer process.
      * On Peer.EXIT the method ends
+     * @throws IOException 
+     * @throws InterruptedException 
      */
-    public void handleTerminalInput() {
-    	BufferedReader br1 = new BufferedReader(new InputStreamReader(System.in));
-    	String next = "";
-		try {
-			next = br1.readLine();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+    public void handleTerminalInput() throws IOException {
+    	while (true) {
+		String message = readString("Message: ");
+		out.write(message);
+		out.flush();
+		if (in.ready()) {
+			in.readLine();
 		}
-    	if (next.equals("exit")) {
-    		return;
-    	} else {
-	    	try {
-				out.write(next);
-				out.flush();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
     	}
-    	
     }
 
     /**

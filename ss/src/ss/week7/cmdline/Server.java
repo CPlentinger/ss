@@ -41,6 +41,7 @@ public class Server {
         }
     	
 		try {
+			System.out.println(InetAddress.getLocalHost());
 			addr = new InetSocketAddress(InetAddress.getLocalHost(), port);
 		} catch (UnknownHostException e1) {
 			// TODO Auto-generated catch block
@@ -53,8 +54,6 @@ public class Server {
         Thread streamInputHandler = new Thread(server);
         streamInputHandler.start();
         server.handleTerminalInput();
-        server.shutDown();
-        sock.close();
     }
 
 } // end of class Server

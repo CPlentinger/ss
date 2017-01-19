@@ -9,7 +9,7 @@ Consumers respond multiple times and skip some input.
 Restrict the order of methods.
 
 7.20
-one, two or three. Depens on how the threadscheduler schedules the threads. If both threads are adding their amount at the same time, the answer won't be three.
+one, two or three. Depends on how the threadscheduler schedules the threads. If both threads are adding their amount at the same time, the answer won't be three.
 The amount will always be three because the program now adds in a chronological order. No threads will be started, only the run method will be executed twice.
 The program won't wait for the threads to finish. It will start the threads and immediately get the value, the threads are probably not finished yet.
 Only three, the threads can't interfere with each other because of the synchronized blocks. They will wait for their turn.

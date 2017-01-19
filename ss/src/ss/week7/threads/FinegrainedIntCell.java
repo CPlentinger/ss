@@ -28,10 +28,10 @@ public class FinegrainedIntCell implements IntCell{
 		l1.lock();
 		try {
 			
-			l2.lock();
+//			l2.lock();
 			written.signal();
 			
-			l2.unlock();
+//			l2.unlock();
 			value = val;
 			try {
 				read.await();
