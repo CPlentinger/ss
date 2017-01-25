@@ -33,7 +33,6 @@ public class IntCell2 {
 class Adder extends Thread {
 	private IntCell2 cell;
 	private int amount;
-	private static Lock lock = new ReentrantLock();
 	
 	public Adder(IntCell2 cellArg, int amountArg) {
 		this.cell = cellArg;
@@ -41,7 +40,7 @@ class Adder extends Thread {
 	}
 	
 	public synchronized void run() {
-		synchronized(lock) {
+		synchronized(cell) {
 			cell.add(amount);
 		}
 	}

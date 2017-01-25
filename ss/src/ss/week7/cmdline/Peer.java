@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 
 /**
@@ -44,9 +45,19 @@ public class Peer implements Runnable {
      */
     public void run() {
     	try {
-			out.write(in.readLine());
+    		String line;
+    		while ((line = in.readLine()) != null) {
+    			System.out.println(line);
+    			out.flush();
+    		}
+    		shutDown();
+		} catch (SocketException e) {
+			if (e.getMessage().equals("Socket closed") || e.getMessage().equals("Connection reset")) {
+				System.out.println("Disconnected");
+			} else {
+				e.printStackTrace();
+			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -60,14 +71,17 @@ public class Peer implements Runnable {
      * @throws InterruptedException 
      */
     public void handleTerminalInput() throws IOException {
-    	while (true) {
-		String message = readString("Message: ");
-		out.write(message);
-		out.flush();
-		if (in.ready()) {
-			in.readLine();
+    	try {
+		String message = readString("");
+		while (message != null && !message.equals("EXIT")) {
+			this.out.write(this.getName() + ": " + message);
+			this.out.newLine();
+			this.out.flush();
+			message = readString("");
 		}
-    	}
+    	} catch (SocketException e) {
+    		System.out.println("Client disconnected");
+    	}		
     }
 
     /**

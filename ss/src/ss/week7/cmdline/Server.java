@@ -48,12 +48,14 @@ public class Server {
 			e1.printStackTrace();
 		}
 		
-		sock = new ServerSocket();
-		sock.bind(addr, port);
-        Peer server = new Peer(name, sock.accept());
-        Thread streamInputHandler = new Thread(server);
-        streamInputHandler.start();
-        server.handleTerminalInput();
+		sock = new ServerSocket(port);
+		Socket socket = new Socket();
+		socket = sock.accept();
+    Peer server = new Peer(name, socket);
+    Thread streamInputHandler = new Thread(server);
+    streamInputHandler.start();
+    server.handleTerminalInput();
+    server.shutDown();
     }
 
 } // end of class Server
